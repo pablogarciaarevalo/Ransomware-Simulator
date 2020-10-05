@@ -28,8 +28,11 @@ $netdrives = @($psdrives)."DisplayRoot"
 #export the drives to csv
 $drives | export-csv -path C:\windows\temp\drives.csv -NoTypeInformation -Encoding ASCII -Force
 
+# Generate certificate
+New-SelfSignedCertificate -DnsName "demo.netapp.com" -CertStoreLocation "cert:\LocalMachine\My"
+
 #define the cert to use for encryption
-$Cert = $(Get-ChildItem Cert:\CurrentUser\My\THUMBPRINTGOESHERE)
+$Cert = $(Get-ChildItem cert:\LocalMachine\My)
 
 #enumerate the network drives
 ForEach ($n in $netdrives)
